@@ -18,6 +18,32 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Circle.hpp" />
+    <ClInclude Include="include\Game.hpp" />
+    <ClInclude Include="include\Graphics2D.hpp" />
+    <ClInclude Include="include\Image.hpp" />
+    <ClInclude Include="include\Keyboard.hpp" />
+    <ClInclude Include="include\Object.hpp" />
+    <ClInclude Include="include\Player.hpp" />
+    <ClInclude Include="include\SceneMgr.hpp" />
+    <ClInclude Include="include\Singleton.hpp" />
+    <ClInclude Include="include\Stage.hpp" />
+    <ClInclude Include="include\Task.hpp" />
+    <ClInclude Include="include\Vector2D.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="include\Stage.cpp" />
+    <ClCompile Include="src\Circle.cpp" />
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Graphics2D.cpp" />
+    <ClCompile Include="src\Image.cpp" />
+    <ClCompile Include="src\Keyboard.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\SceneMgr.cpp" />
+    <ClCompile Include="src\Vector2D.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4AC8D2DC-4440-4954-9985-843EB10C8570}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -89,7 +115,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\SHOHEI\Downloads\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\SHOHEI\Downloads\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\SHOHEI\Documents\Visual Studio 2015\Projects\Ohajiki\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -122,7 +148,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\SHOHEI\Downloads\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\SHOHEI\Downloads\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\SHOHEI\Documents\Visual Studio 2015\Projects\Ohajiki\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -151,14 +177,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="SceneMgr.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="SceneMgr.hpp" />
-    <ClInclude Include="Task.hpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

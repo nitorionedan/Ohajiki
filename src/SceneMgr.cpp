@@ -1,5 +1,7 @@
-#include "SceneMgr.hpp"
 #include <DxLib.h>
+
+#include "SceneMgr.hpp"
+#include "Keyboard.hpp"
 
 
 SceneMgrClass::SceneMgrClass()
@@ -22,6 +24,8 @@ void SceneMgrClass::Initialize()
 
 void SceneMgrClass::Update()
 {
+	Keyboard::Instance()->Update();
+
 	m_game->Update();
 }
 

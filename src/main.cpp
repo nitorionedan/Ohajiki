@@ -13,7 +13,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		MessageBox(nullptr, "Dxlib_Init() is failed.", "Error", MB_OK);
 		return -1;
 	}
-	SetChangeScreenModeGraphicsSystemResetFlag(FALSE); //< 画面モード変更後、素材メモリをリセットしない
+	SetChangeScreenModeGraphicsSystemResetFlag(FALSE); //< If you change window mode, don't reset resources.
 
 	// Objects.
 	std::unique_ptr<SceneMgrClass> sceneMgr(std::make_unique<SceneMgrClass>());
@@ -37,6 +37,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// Quit command.
 		if (CheckHitKey(KEY_INPUT_ESCAPE) != 0)
 		{
+			MessageBox(nullptr, "Bye!", "Quit a game.", MB_OK);
 			break;
 		}
 
