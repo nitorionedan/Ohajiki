@@ -4,6 +4,9 @@
 #include "SceneMgr.hpp"
 
 
+void Setup(); //< Settings.
+
+
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	// Initialize.
@@ -13,7 +16,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		MessageBox(nullptr, "Dxlib_Init() is failed.", "Error", MB_OK);
 		return -1;
 	}
-	SetChangeScreenModeGraphicsSystemResetFlag(FALSE); //< If you change window mode, don't reset resources.
+	Setup();
 
 	// Objects.
 	std::unique_ptr<SceneMgrClass> sceneMgr(std::make_unique<SceneMgrClass>());
@@ -35,11 +38,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		sceneMgr->Draw();
 
 		// Quit command.
+#ifdef _DEBUG
 		if (CheckHitKey(KEY_INPUT_ESCAPE) != 0)
 		{
-			MessageBox(nullptr, "Bye!", "Quit a game.", MB_OK);
+			MessageBox(nullptr, "Thank you for playing! Bye:D", "Quit", MB_OK);
 			break;
 		}
+#endif //< #ifdef _DEBUG
 
 		ScreenFlip();
 	}
@@ -47,4 +52,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// Finalize.
 	DxLib_End();
 	return 0;
+}
+
+
+void Setup()
+{
+	SetChangeScreenModeGraphicsSystemResetFlag(FALSE); //< If you change window mode, don't reset resources.
+	SetMouseDispFlag(TRUE);
+	SRand(64864);
 }

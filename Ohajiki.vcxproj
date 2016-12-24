@@ -24,15 +24,20 @@
     <ClInclude Include="include\Graphics2D.hpp" />
     <ClInclude Include="include\Image.hpp" />
     <ClInclude Include="include\Keyboard.hpp" />
+    <ClInclude Include="include\Line.hpp" />
     <ClInclude Include="include\Object.hpp" />
     <ClInclude Include="include\Player.hpp" />
+    <ClInclude Include="include\RectClass.hpp" />
     <ClInclude Include="include\SceneMgr.hpp" />
     <ClInclude Include="include\Singleton.hpp" />
     <ClInclude Include="include\Stage.hpp" />
     <ClInclude Include="include\Task.hpp" />
     <ClInclude Include="include\Vector2D.hpp" />
+    <ClInclude Include="include\Visitor.hpp" />
+    <ClInclude Include="include\yiostream.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\Line.cpp" />
     <ClCompile Include="include\Stage.cpp" />
     <ClCompile Include="src\Circle.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -41,6 +46,7 @@
     <ClCompile Include="src\Keyboard.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\RectClass.cpp" />
     <ClCompile Include="src\SceneMgr.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
   </ItemGroup>

@@ -1,3 +1,4 @@
+#include <cassert>
 #include "Image.hpp"
 
 
@@ -164,7 +165,8 @@ int Image::GetHandle(std::string key)
 	std::string warning = key + " key was not found.";
 
 	MessageBox(NULL, warning.c_str(), "NOT FOUND", MB_OK);
-	
+	assert(!"Shouldn't reach here.");
+
 	return -1;
 }
 
