@@ -11,7 +11,6 @@
 #undef min
 #undef max
 
-
 Vector2D const Vector2D::ZERO(0., 0.);
 Vector2D const Vector2D::LEFT(-1., 0.);
 Vector2D const Vector2D::RIGHT(1., 0.);
@@ -26,8 +25,21 @@ Vector2D::Vector2D(double x, double y)
 }
 
 
+void Vector2D::SetVec(double x, double y)
+{
+	this->x = x;
+	this->y = y;
+}
+
+
 void Vector2D::SetZero() {
 	x = y = 0.;
+}
+
+
+void Vector2D::Fill(double XY)
+{
+	x = y = XY;
 }
 
 
@@ -73,10 +85,11 @@ bool Vector2D::CirclesCollision(const double & Range1, const double & Range2, co
 	return (hLengrth * hLengrth >= xLength * xLength + yLength * yLength);
 }
 
+
 bool Vector2D::CirclesCollision(const double & Range1, const double & Range2, const Vector2D & Pos1, const Vector2D & Pos2)
 {
 	const double& hLen = (Range1 + Range2);
-	const Vector2D& Len = Vector2D::GetVec2(Pos1, Pos2);
+	const Vector2D Len = Vector2D::GetVec2(Pos1, Pos2);
 	return (hLen * hLen >= std::pow(Len.x, 2) + std::pow(Len.y, 2));
 }
 
@@ -86,6 +99,19 @@ bool Vector2D::RectanglePointCollision(const double & MyX, const double & MyY, c
 	const double& MyX2 = (MyX + Width);
 	const double& MyY2 = (MyY + Height);
 	return (MyX <= TarX && TarX <= MyX2 && MyY <= TarY && TarY <= MyY2);
+}
+
+
+Vector2D Vector2D::GetVec(double x, double y)
+{
+	return  Vector2D(x, y);
+}
+
+
+Vector2D & Vector2D::GetVec2(const Vector2D & vec1, const Vector2D & vec2)
+{
+	Vector2D vec(vec2.x - vec1.x, vec2.y - vec1.y);
+	return vec;
 }
 
 
@@ -120,8 +146,138 @@ const double Vector2D::ToAngle() const
 }
 
 
+double Vector2D::Distance(const Vector2D & other) const
+{
+	return (*this - other).Length();
+}
+
+
+double Vector2D::DotProduct(const Vector2D & other) const
+{
+	return (x * other.x) + (y * other.y);
+}
+
+
+double Vector2D::CrossProduct(const Vector2D & other) const
+{
+	return (x * other.y) - (y * other.x);
+}
+
+
+Vector2D & Vector2D::operator=(const Vector2D & obj)
+{
+	x = obj.x;
+	y = obj.y;
+	return *this;
+}
+
+
+Vector2D & Vector2D::operator+=(const Vector2D & other)
+{
+	x += other.x;
+	y += other.y;
+	return *this;
+}
+
+
+Vector2D & Vector2D::operator-=(const Vector2D & obj)
+{
+	this->x -= obj.x;
+	this->y -= obj.y;
+	return *this;
+}
+
+
+Vector2D & Vector2D::operator*=(const Vector2D & obj)
+{
+	this->x *= obj.x;
+	this->y *= obj.y;
+	return *this;
+}
+
+
+Vector2D & Vector2D::operator/=(const Vector2D & obj)
+{
+	this->x /= obj.x;
+	this->y /= obj.y;
+	return *this;
+}
+
+
+const Vector2D Vector2D::operator+() const
+{
+	return *this;
+}
+
+
+const Vector2D Vector2D::operator+(const double & scalar) const
+{
+	return Vector2D(scalar + x, scalar + y);
+}
+
+
+const Vector2D Vector2D::operator+(const Vector2D & other) const
+{
+	return Vector2D(x + other.x, y + other.y);
+}
+
+
+const Vector2D Vector2D::operator-() const
+{
+	return Vector2D(-x, -y);
+}
+
+
+const Vector2D Vector2D::operator-(const double & scalar) const
+{
+	return Vector2D(x - scalar, y - scalar);
+}
+
+
+const Vector2D Vector2D::operator-(const Vector2D & other) const
+{
+	return Vector2D(x - other.x, y - other.y);
+}
+
+
+const Vector2D Vector2D::operator*(const double & scalar) const
+{
+	return Vector2D(scalar * x, scalar * y);
+}
+
+
 const Vector2D Vector2D::operator/(const double & scalar) const
 {
 	assert(scalar != 0);
 	return Vector2D(x / scalar, y / scalar);
 }
+
+
+bool Vector2D::operator==(const Vector2D & other) const
+{
+	return (x == other.x) && (y == other.y);
+}
+
+
+bool Vector2D::operator!=(const Vector2D & other) const
+{
+	return !(*this == other);
+}
+
+
+bool Vector2D::operator<(const Vector2D & other) const
+{
+	if (x < other.x)	return true;
+	if (y < other.y)	return true;
+	return false;
+}
+
+
+bool Vector2D::operator>(const Vector2D & other) const
+{
+	if (x > other.x)	return true;
+	if (y > other.y)	return true;
+	return false;
+}
+
+// EOF

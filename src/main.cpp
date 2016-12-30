@@ -26,11 +26,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	while (ProcessMessage() == 0 && SetDrawScreen(DX_SCREEN_BACK) == 0 && ClearDrawScreen() == 0)
 	{
 		// Control modulation of main loop.
-		int wait = 0; //< wait time (mili sec).
-		if ( (wait = GetNowCount() - FrameStartTime) < 1000 / 60) //< 60 fps
-		{
-			Sleep(wait);
-		}
+		//int wait = 0; //< wait time (mili sec).
+		//if ( (wait = GetNowCount() - FrameStartTime) < 1000 / 30) //< 60 fps
+		//{
+		//	clsDx();
+		//	printfDx("%d", wait);
+		//	Sleep(wait);
+		//}
+		while (GetNowCount() - FrameStartTime < 1000 / 60) { Sleep(4); } //< FPS§ŒäiŠÈˆÕ”Åj		
 		FrameStartTime = GetNowCount();
 
 		// Scene process.

@@ -35,10 +35,12 @@
     <ClInclude Include="include\Vector2D.hpp" />
     <ClInclude Include="include\Visitor.hpp" />
     <ClInclude Include="include\yiostream.h" />
+    <ClInclude Include="Physics.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\Line.cpp" />
     <ClCompile Include="include\Stage.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="src\Circle.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics2D.cpp" />
