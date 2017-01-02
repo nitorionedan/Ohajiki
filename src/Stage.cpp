@@ -45,7 +45,7 @@ const Rect & StageClass::GetBorder() const
 }
 
 
-void StageClass::GetBorder(int & left, int & right, int & top, int & bottom)
+void StageClass::GetBorder(int & left, int & right, int & top, int & bottom) const
 {
 	left   = m_rect.left;
 	right  = m_rect.right;

@@ -1,29 +1,27 @@
 #pragma once
-
 #include <memory>
-#include "Object.hpp"
 #include "Image.hpp"
 #include "Circle.hpp"
-#include "Visitor.hpp"
+#include "RectClass.hpp"
 #include "Game.hpp"
+#include "PlayerClass.hpp"
 
 
-// ※PlayerClassという抽象クラスを用意すること。
-class PlayerClass final : public Object
+class Player1 : public PlayerClass
 {
 public:
-	PlayerClass(const GameClass* game);
-	~PlayerClass();
+	explicit Player1(const GameClass* game);
+	~Player1();
 
-	void Initialize();
-	void Update();
-	void Draw();
-
-	const Vector2D& Pos() const; //< Get position.
-	const Circle& GetHitCircle() const; //< Get hit circle.
+	virtual void Initialize() override;
+	virtual void Update() override;
+	virtual void Draw() override;
+	virtual const Vector2D& Pos() const override;
+	virtual const Circle& GetRange() const override;
 
 private:
-	PlayerClass() {}
+	Player1() { game = nullptr; }
+	Player1(const Player1&) { game = nullptr; }
 
 	void Move();
 	void CheckOverBoundary();
@@ -31,11 +29,8 @@ private:
 
 	const GameClass* game;
 
-	static int s_m_num;               //< Num of players.
-
 	std::unique_ptr<Image> m_img;
 	Vector2D m_force;
-	Circle m_circle;
 	Rect m_ringBou;                   //< Boundary of ring.
 
 	float m_brake;                    //< Force of brake.

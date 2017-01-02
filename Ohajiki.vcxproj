@@ -26,7 +26,10 @@
     <ClInclude Include="include\Keyboard.hpp" />
     <ClInclude Include="include\Line.hpp" />
     <ClInclude Include="include\Object.hpp" />
-    <ClInclude Include="include\Player.hpp" />
+    <ClInclude Include="include\Physics.hpp" />
+    <ClInclude Include="include\Player1.hpp" />
+    <ClInclude Include="include\Player2.hpp" />
+    <ClInclude Include="include\PlayerClass.hpp" />
     <ClInclude Include="include\RectClass.hpp" />
     <ClInclude Include="include\SceneMgr.hpp" />
     <ClInclude Include="include\Singleton.hpp" />
@@ -35,21 +38,22 @@
     <ClInclude Include="include\Vector2D.hpp" />
     <ClInclude Include="include\Visitor.hpp" />
     <ClInclude Include="include\yiostream.h" />
-    <ClInclude Include="Physics.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\Line.cpp" />
-    <ClCompile Include="include\Stage.cpp" />
-    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="src\Circle.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics2D.cpp" />
     <ClCompile Include="src\Image.cpp" />
     <ClCompile Include="src\Keyboard.cpp" />
+    <ClCompile Include="src\Line.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Physics.cpp" />
+    <ClCompile Include="src\Player1.cpp" />
+    <ClCompile Include="src\Player2.cpp" />
+    <ClCompile Include="src\PlayerClass.cpp" />
     <ClCompile Include="src\RectClass.cpp" />
     <ClCompile Include="src\SceneMgr.cpp" />
+    <ClCompile Include="src\Stage.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -14,7 +14,7 @@ public:
 	void Update();
 	void Draw();
 	const Rect& GetBorder() const;
-	void GetBorder(int& left, int& right, int& top, int& bottom);
+	void GetBorder(int& left, int& right, int& top, int& bottom) const;
 
 private:
 

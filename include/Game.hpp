@@ -1,10 +1,8 @@
 #pragma once
 #include <memory>
 #include "Task.hpp"
-
-
-class PlayerClass;
-class StageClass;
+#include "PlayerClass.hpp"
+#include "Stage.hpp"
 
 
 class GameClass : public Task
@@ -16,16 +14,16 @@ public:
 	virtual void Update() override;
 	virtual void Draw() override;
 
-	const std::shared_ptr<PlayerClass> Player() const;
-	const std::shared_ptr<PlayerClass> Player2() const;
-	const std::shared_ptr<StageClass> Stage() const;
+	const PlayerClass* GetPlayer() const;
+	const PlayerClass* GetPlayer2() const;
+	const StageClass* Stage() const;
 
 private:
 	void Initialize();
 	
-	std::shared_ptr<PlayerClass> m_player;
-	std::shared_ptr<PlayerClass> m_player2;
-	std::shared_ptr<StageClass> m_stage;
+	std::unique_ptr<PlayerClass> m_player;
+	std::unique_ptr<PlayerClass> m_player2;
+	std::unique_ptr<StageClass> m_stage;
 	
 	bool m_pauseFlag;
 };

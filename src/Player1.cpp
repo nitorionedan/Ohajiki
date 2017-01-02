@@ -1,26 +1,24 @@
 #include <DxLib.h>
 #include <cassert>
-#include "Player.hpp"
+#include "Player1.hpp"
 #include "Keyboard.hpp"
 
  
 namespace
 {
-	constexpr float REFLECTION_RATE = 1.1f;
+	constexpr float REFLECTION_RATE = 1.0f;
 }
 
 
 namespace DEBUG
 {
-	constexpr float BRAKE_POWER = 0.99f;
+	constexpr float BRAKE_POWER = 0.999f; // 0.99
 	constexpr float BRAKE_BRAKE = 0.9999f;
+	Circle other;
 }
 
-// Static members
-int PlayerClass::s_m_num = 0;
 
-
-PlayerClass::PlayerClass(const GameClass* game)
+Player1::Player1(const GameClass* game)
 	: game(game)
 	, m_img(new Image)
 	, m_color(GetColor(0, 0, 0))
@@ -30,16 +28,14 @@ PlayerClass::PlayerClass(const GameClass* game)
 }
 
 
-PlayerClass::~PlayerClass()
+Player1::~Player1()
 {
-	s_m_num--;
 	DeleteSoundMem(h_se_hit);
 }
 
 
-void PlayerClass::Initialize()
+void Player1::Initialize()
 {
-	s_m_num++;
 	m_circle.r = 10;
 
 	// Get players boundary.
@@ -58,23 +54,19 @@ void PlayerClass::Initialize()
 
 	m_force = Vector2D::ZERO;
 	m_brake = DEBUG::BRAKE_POWER;
-	m_num = s_m_num;
+	m_num = PlayerClass::s_num;
 
 	// Setup the color.
-	switch (m_num)
-	{
-	case 1: m_color = GetColor(255, 0, 0);
-		break;
-	case 2:	m_color = GetColor(0, 0, 255);
-		break;
-	default: assert(!"Abnormality val.");
-		break;
-	}
+	m_color = GetColor(255, 0, 0);
+
+	// DEBUG ----------------------------------------------
+	DEBUG::other.cx = GetRand(borderX) + l;
+	DEBUG::other.cy = GetRand(borderY) + t;
+	DEBUG::other.r = 10.;
 }
 
 
-
-void PlayerClass::Update()
+void Player1::Update()
 {
 	// Sync objects.
 	m_circle.cx = pos.x;
@@ -83,40 +75,44 @@ void PlayerClass::Update()
 	CheckOverBoundary();
 	Move();
 
-	// Players collision.
-	CheckPlayersCol();
+	// Collision checl.
+	//CheckPlayersCol();
 
 	// DEBUG -----------------------------------------------------------
-	if (Keyboard::Instance()->isPush(Input::KeyCode.Return) && m_num == 1)
+	if (Keyboard::Instance()->isPush(Input::KeyCode.Return))
 	{
+		printfDx("ok");
 		Vector2D tmp;
 		tmp.SetVec(GetRand(100) - 50, GetRand(100) - 50);
-		m_force = tmp.Normalize() * 20;
+		m_force = tmp.Normalize() * 40;
 		m_brake = DEBUG::BRAKE_POWER;
 		isMoving = true;
 	}
 }
 
 
-void PlayerClass::Draw()
+void Player1::Draw()
 {
 	DrawCircle(m_circle.cx, m_circle.cy, m_circle.r, m_color, FALSE);
+
+	// DEBUG ----------------------------------------------------------
+	DrawCircle(DEBUG::other.cx, DEBUG::other.cy, DEBUG::other.r, GetColor(0, 255, 0), FALSE);
 }
 
 
-const Vector2D &PlayerClass::Pos() const
+const Vector2D &Player1::Pos() const
 {
 	return pos;
 }
 
 
-const Circle & PlayerClass::GetHitCircle() const
+const Circle & Player1::GetRange() const
 {
 	return m_circle;
 }
 
 
-void PlayerClass::Move()
+void Player1::Move()
 {
 	// Add force vector to local position.
 	pos += m_force;
@@ -137,7 +133,7 @@ void PlayerClass::Move()
 }
 
 
-void PlayerClass::CheckOverBoundary()
+void Player1::CheckOverBoundary()
 {
 	const bool isHitLeft   = pos.x < game->Stage()->GetBorder().left + m_circle.r;
 	const bool isHitRight  = pos.x > game->Stage()->GetBorder().right - m_circle.r;
@@ -185,51 +181,27 @@ void PlayerClass::CheckOverBoundary()
 	PlaySoundMem(h_se_hit, DX_PLAYTYPE_BACK);
 }
 
-void PlayerClass::CheckPlayersCol()
+void Player1::CheckPlayersCol()
 {
-	bool isHit = false;
-	Vector2D dir;
+	//bool isHit = false;
+	//Vector2D dir;
 
-	// 1P
-	if (m_num == 1)
-	{
-		isHit = Vector2D::CirclesCollision(m_circle.r, game->Player2()->GetHitCircle().r, pos, game->Player2()->Pos());
-	}
+	//isHit = Vector2D::CirclesCollision(m_circle.r, game->Player2()->GetRange().r, pos, game->Player2()->Pos());
 
-	// 2P
-	if (m_num == 2)
-	{
-		isHit = Vector2D::CirclesCollision(m_circle.r, game->Player()->GetHitCircle().r, pos, game->Player()->Pos());
-	}
+	//// Reflection.
+	//if (!isHit)
+	//{
+	//	return;
+	//}
 
-	// Reflection.
-	if (isHit)
-	{
-		if (m_num == 1)
-		{
-			//double radAng = std::atan2(pos.y, game->Player2()->Pos().y);
-			if (pos.y < game->Player2()->GetHitCircle().cy)
-			{
-				m_force = Vector2D(m_force.x, -m_force.y);
-			}
-			else
-			{
-				m_force = Vector2D(-m_force.x, m_force.y);
-			}
-		}
-		else if (m_num == 2)
-		{
-			//double radAng = std::atan2(pos.y, game->Player()->Pos().y);
-			if (pos.y < game->Player()->GetHitCircle().cy)
-			{
-				m_force = Vector2D(m_force.x, -m_force.y);
-			}
-			else
-			{
-				m_force = Vector2D(-m_force.x, m_force.y);
-			}
-		}
-	}
+	//if (pos.y < game->Player2()->GetRange().cy)
+	//{
+	//	m_force = Vector2D(m_force.x, -m_force.y);
+	//}
+	//else
+	//{
+	//	m_force = Vector2D(-m_force.x, m_force.y);
+	//}
 }
 
 // EOF

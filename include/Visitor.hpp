@@ -1,6 +1,5 @@
 #pragma once
 #include "Stage.hpp"
-#include "Player.hpp"
 
 
 class VisitorClass

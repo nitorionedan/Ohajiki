@@ -1,13 +1,13 @@
 #include "Game.hpp"
-#include "Player.hpp"
-#include "Stage.hpp"
+#include "Player1.hpp"
+#include "Player2.hpp"
 #include "Keyboard.hpp"
 
 
 GameClass::GameClass()
 	: m_stage(new StageClass)
-	, m_player(new PlayerClass(this))
-	, m_player2(new PlayerClass(this))
+	, m_player(static_cast<PlayerClass*>(new Player1(this)))
+	, m_player2(static_cast<PlayerClass*>(new Player2(this)))
 {
 	Initialize();
 }
@@ -15,6 +15,7 @@ GameClass::GameClass()
 
 GameClass::~GameClass()
 {
+	PlayerClass::Finalize();
 }
 
 
@@ -33,7 +34,7 @@ void GameClass::Initialize()
 
 void GameClass::Update()
 {
-	// Puse switching
+	// Pause switching
 	if (Keyboard::Instance()->isPush(Input::KeyCode.Q))
 	{
 		m_pauseFlag = !m_pauseFlag;
@@ -62,21 +63,21 @@ void GameClass::Draw()
 }
 
 
-const std::shared_ptr<PlayerClass> GameClass::Player() const
+const PlayerClass* GameClass::GetPlayer() const
 {
-	return m_player;
+	return m_player.get();
 }
 
 
-const std::shared_ptr<PlayerClass> GameClass::Player2() const
+const PlayerClass* GameClass::GetPlayer2() const
 {
-	return m_player2;
+	return m_player2.get();
 }
 
 
-const std::shared_ptr<StageClass> GameClass::Stage() const
+const StageClass* GameClass::Stage() const
 {
-	return m_stage;
+	return m_stage.get();
 }
 
 // EOF
