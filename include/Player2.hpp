@@ -11,7 +11,7 @@
 class Player2 : public PlayerClass
 {
 public:
-	explicit Player2(const GameClass* game);
+	explicit Player2(GameClass const * const game);
 	~Player2();
 
 	virtual void Initialize() override;
@@ -21,23 +21,23 @@ public:
 	virtual const Circle& GetRange() const override;
 
 private:
-	Player2() { game = nullptr; }
-	Player2(const Player2&) { game = nullptr; }
+	Player2() : game(nullptr) {}
+	Player2(const Player2&) : game(nullptr) {}
 
 	void Move();
 	void CheckOverBoundary();
 	void CheckPlayersCol();
 
-	const GameClass* game;
+	const GameClass* const game;
 
 	std::unique_ptr<Image> m_img;
 	Vector2D m_force;
-	Rect m_ringBou;                   //< Boundary of ring.
+	Rect m_ringBou; //< Boundary of ring.
 
-	float m_brake;                    //< Force of brake.
-	unsigned int m_color;             //< Players color.
+	float m_brake;        //< Force of brake.
+	unsigned int m_color; //< Players color.
 	int m_num;
-	int h_se_hit; //< Hit sound
+	int h_se_hit;         //< Hit sound
 	bool isMoving;
 };
 

@@ -10,7 +10,7 @@
 class Player1 : public PlayerClass
 {
 public:
-	explicit Player1(const GameClass* game);
+	explicit Player1(GameClass const * const game);
 	~Player1();
 
 	virtual void Initialize() override;
@@ -20,14 +20,14 @@ public:
 	virtual const Circle& GetRange() const override;
 
 private:
-	Player1() { game = nullptr; }
-	Player1(const Player1&) { game = nullptr; }
+	Player1() : game(nullptr) {}
+	Player1(const Player1&) : game(nullptr) {}
 
 	void Move();
 	void CheckOverBoundary();
 	void CheckPlayersCol();
 
-	const GameClass* game;
+	GameClass const * const game;
 
 	std::unique_ptr<Image> m_img;
 	Vector2D m_force;

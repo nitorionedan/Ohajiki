@@ -124,17 +124,19 @@ const Vector2D & Vector2D::Normalize() const
 }
 
 
-const double Vector2D::Length() const {
+const double Vector2D::Length() const 
+{
 	return std::sqrt(DotProduct(*this));
 }
 
 
-const double Vector2D::ToRad() const {
-	return this->ToAngle() * DX_PI / 180;
+const double Vector2D::ToRad() const
+{
+	return this->ToDeg() * DX_PI / 180;
 }
 
 
-const double Vector2D::ToAngle() const
+const double Vector2D::ToDeg() const
 {
 	double angle = std::acos(x / std::sqrt(x * x + y * y));
 	angle *= 180 / DX_PI;

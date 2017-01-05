@@ -3,6 +3,7 @@
 #include "Task.hpp"
 #include "PlayerClass.hpp"
 #include "Stage.hpp"
+#include "Mouse.hpp"
 
 
 class GameClass : public Task
@@ -17,6 +18,7 @@ public:
 	const PlayerClass* GetPlayer() const;
 	const PlayerClass* GetPlayer2() const;
 	const StageClass* Stage() const;
+	static void Pause();
 
 private:
 	void Initialize();
@@ -24,6 +26,7 @@ private:
 	std::unique_ptr<PlayerClass> m_player;
 	std::unique_ptr<PlayerClass> m_player2;
 	std::unique_ptr<StageClass> m_stage;
+	std::unique_ptr<MouseClass> m_mouse;
 	
-	bool m_pauseFlag;
+	static bool m_pauseFlag;
 };

@@ -25,34 +25,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// Main loop.
 	while (ProcessMessage() == 0 && SetDrawScreen(DX_SCREEN_BACK) == 0 && ClearDrawScreen() == 0)
 	{
-		// Control modulation of main loop.
-		//int wait = 0; //< wait time (mili sec).
-		//if ( (wait = GetNowCount() - FrameStartTime) < 1000 / 30) //< 60 fps
-		//{
-		//	clsDx();
-		//	printfDx("%d", wait);
-		//	Sleep(wait);
-		//}
-		while (GetNowCount() - FrameStartTime < 1000 / 60) { Sleep(4); } //< FPS制御（簡易版）		
+		// FPS制御（簡易版）
+		while (GetNowCount() - FrameStartTime < 1000 / 60) { Sleep(4); }
 		FrameStartTime = GetNowCount();
 
 		// Scene process.
 		sceneMgr->Update();
 		sceneMgr->Draw();
 
-		// Quit command.
 #ifdef _DEBUG
+		// Quit command.
 		if (CheckHitKey(KEY_INPUT_ESCAPE) != 0)
 		{
-			MessageBox(nullptr, "Thank you for playing! Bye:D", "Quit", MB_OK);
+			SetMouseDispFlag(TRUE);
+			MessageBox(GetParent(nullptr), "Thank you for playing! Bye:D", "Quit", MB_OK);
 			break;
 		}
-#endif //< #ifdef _DEBUG
-
+#endif
 		ScreenFlip();
 	}
 
-	// Finalize.
+	// Shutdown.
 	DxLib_End();
 	return 0;
 }
@@ -61,6 +54,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 void Setup()
 {
 	SetChangeScreenModeGraphicsSystemResetFlag(FALSE); //< If you change window mode, don't reset resources.
-	SetMouseDispFlag(TRUE);
+	SetMouseDispFlag(FALSE);
+	SetWindowText("Ohajiki");
 	SRand(64864);
 }

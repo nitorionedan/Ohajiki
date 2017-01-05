@@ -4,10 +4,14 @@
 #include "Keyboard.hpp"
 
 
+bool GameClass::m_pauseFlag = false;
+
+
 GameClass::GameClass()
 	: m_stage(new StageClass)
 	, m_player(static_cast<PlayerClass*>(new Player1(this)))
 	, m_player2(static_cast<PlayerClass*>(new Player2(this)))
+	, m_mouse(new MouseClass)
 {
 	Initialize();
 }
@@ -27,8 +31,6 @@ void GameClass::Initialize()
 	// Second: The other objects.
 	m_player->Initialize();
 	m_player2->Initialize();
-
-	m_pauseFlag = false;
 }
 
 
@@ -39,6 +41,8 @@ void GameClass::Update()
 	{
 		m_pauseFlag = !m_pauseFlag;
 	}
+
+	m_mouse->Update();
 
 	if (!m_pauseFlag)
 	{
@@ -60,6 +64,7 @@ void GameClass::Draw()
 	m_stage->Draw();
 	m_player->Draw();
 	m_player2->Draw();
+	m_mouse->Draw();
 }
 
 
@@ -78,6 +83,15 @@ const PlayerClass* GameClass::GetPlayer2() const
 const StageClass* GameClass::Stage() const
 {
 	return m_stage.get();
+}
+
+
+void GameClass::Pause()
+{
+#ifdef _DEBUG
+	printfDx("Pause()\n");
+#endif
+	m_pauseFlag = true;
 }
 
 // EOF

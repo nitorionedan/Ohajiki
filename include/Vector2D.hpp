@@ -3,7 +3,7 @@
 class Vector2D
 {
 public:
-	explicit Vector2D(double x, double y);
+	Vector2D(double x, double y);
 	Vector2D() {}
 
 	void SetVec(double x, double y);
@@ -32,9 +32,18 @@ public:
 	static Vector2D& GetVec2(const Vector2D& vec1, const Vector2D& vec2);
 
 	const Vector2D& Normalize() const;
+
+	// @brief Get length from vector.
 	const double Length() const;
+
+	// @brief     Get radian from vector.
+	// @return    Radian.
+	// @attention This func uses ToDeg().
 	const double ToRad() const;
-	const double ToAngle() const;
+
+	// @brief  Get degree from vector.
+	// @return Degree.
+	const double ToDeg() const;
 
 	// ---------------------------------------------------
 	// @brief				相手までのベクトルを計算
@@ -60,22 +69,31 @@ public:
 	Vector2D& operator -= (const Vector2D& obj);
 	Vector2D& operator *= (const Vector2D& obj);
 	Vector2D& operator /= (const Vector2D& obj);
+
 	// @brief +vec
 	const Vector2D operator + () const;
+	
 	// @brief vec + num
 	const Vector2D operator + (const double& scalar) const;
+	
 	// @brief vec + vec
 	const Vector2D operator + (const Vector2D& other) const;
+	
 	// @brief -vec
 	const Vector2D operator - () const;
+	
 	// @brief vec - num
 	const Vector2D operator - (const double& scalar) const;
+	
 	// @brief vec - vec
 	const Vector2D operator - (const Vector2D& other) const;
+	
 	// @brief vec * num
 	const Vector2D operator * (const double& scalar) const;
+	
 	// @brief vec / num
 	const Vector2D operator / (const double& scalar) const;
+	
 	bool operator == (const Vector2D& other) const;
 	bool operator != (const Vector2D& other) const;
 	bool operator < (const Vector2D& other) const;

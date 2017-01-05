@@ -12,16 +12,23 @@ namespace
 
 namespace DEBUG
 {
-	constexpr float BRAKE_POWER = 0.999f; // 0.99
+	// Currently level design  //
+	/****************************
+	MIN : Force level >>> 40
+	      Brake power >>> 0.999f
+
+	MAX : Force level >>> 20
+	      Brake power >>> 0.9f
+	*****************************/
+	constexpr float FORCE_LEVEL = 20.0f;
+	constexpr float BRAKE_POWER = 0.99f;
 	constexpr float BRAKE_BRAKE = 0.9999f;
-	Circle other;
 }
 
 
-Player1::Player1(const GameClass* game)
+Player1::Player1(GameClass const * const game)
 	: game(game)
 	, m_img(new Image)
-	, m_color(GetColor(0, 0, 0))
 	, h_se_hit(LoadSoundMem("sound/reflection.mp3"))
 	, m_num(0)
 {
@@ -58,11 +65,6 @@ void Player1::Initialize()
 
 	// Setup the color.
 	m_color = GetColor(255, 0, 0);
-
-	// DEBUG ----------------------------------------------
-	DEBUG::other.cx = GetRand(borderX) + l;
-	DEBUG::other.cy = GetRand(borderY) + t;
-	DEBUG::other.r = 10.;
 }
 
 
@@ -72,19 +74,20 @@ void Player1::Update()
 	m_circle.cx = pos.x;
 	m_circle.cy = pos.y;
 
-	CheckOverBoundary();
 	Move();
 
-	// Collision checl.
-	//CheckPlayersCol();
+	// Collision check.
+	CheckOverBoundary();
+	CheckPlayersCol();
 
 	// DEBUG -----------------------------------------------------------
-	if (Keyboard::Instance()->isPush(Input::KeyCode.Return))
+	int Mouse = GetMouseInput();
+	if (Mouse & MOUSE_INPUT_LEFT)
 	{
-		printfDx("ok");
-		Vector2D tmp;
-		tmp.SetVec(GetRand(100) - 50, GetRand(100) - 50);
-		m_force = tmp.Normalize() * 40;
+		int mouse_x, mouse_y;
+		GetMousePoint(&mouse_x, &mouse_y);
+		Vector2D tmp = Vector2D(pos.x - mouse_x, pos.y - mouse_y);
+		m_force = tmp.Normalize() * DEBUG::FORCE_LEVEL;
 		m_brake = DEBUG::BRAKE_POWER;
 		isMoving = true;
 	}
@@ -94,9 +97,6 @@ void Player1::Update()
 void Player1::Draw()
 {
 	DrawCircle(m_circle.cx, m_circle.cy, m_circle.r, m_color, FALSE);
-
-	// DEBUG ----------------------------------------------------------
-	DrawCircle(DEBUG::other.cx, DEBUG::other.cy, DEBUG::other.r, GetColor(0, 255, 0), FALSE);
 }
 
 
@@ -141,6 +141,7 @@ void Player1::CheckOverBoundary()
 	const bool isHitBottom = pos.y > game->Stage()->GetBorder().bottom - m_circle.r;
 	const bool isHit       = isHitLeft || isHitRight || isHitTop || isHitBottom;
 
+	// If don't collide anybody, return here.
 	if (!isHit)
 	{
 		return;
@@ -183,25 +184,34 @@ void Player1::CheckOverBoundary()
 
 void Player1::CheckPlayersCol()
 {
-	//bool isHit = false;
-	//Vector2D dir;
+	bool isHit = Vector2D::CirclesCollision(m_circle.r, game->GetPlayer2()->GetRange().r,
+		pos, game->GetPlayer2()->Pos());
 
-	//isHit = Vector2D::CirclesCollision(m_circle.r, game->Player2()->GetRange().r, pos, game->Player2()->Pos());
+	// If it no collision, return here.
+	if (!isHit)
+	{
+		return;
+	}
 
-	//// Reflection.
-	//if (!isHit)
-	//{
-	//	return;
-	//}
+	GameClass::Pause();
 
-	//if (pos.y < game->Player2()->GetRange().cy)
-	//{
-	//	m_force = Vector2D(m_force.x, -m_force.y);
-	//}
-	//else
-	//{
-	//	m_force = Vector2D(-m_force.x, m_force.y);
-	//}
+	// Separate player1 from player2.
+	Vector2D dis = Vector2D(game->GetPlayer2()->Pos().x - pos.x, game->GetPlayer2()->Pos().y - pos.y);
+	Vector2D unit = Vector2D(dis.Normalize().x, dis.Normalize().y);
+	double dir = dis.ToRad();
+	double offset = m_circle.r - game->GetPlayer2()->GetRange().r;
+	pos.x += unit.x * std::cos(dir) * offset;
+	pos.y += unit.y * std::sin(dir) * offset;
+
+	// Calc reflection.
+	if (pos.y < game->GetPlayer2()->GetRange().cy)
+	{
+		m_force = Vector2D(m_force.x, -m_force.y);
+	}
+	else
+	{
+		m_force = Vector2D(-m_force.x, m_force.y);
+	}
 }
 
 // EOF

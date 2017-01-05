@@ -25,6 +25,7 @@
     <ClInclude Include="include\Image.hpp" />
     <ClInclude Include="include\Keyboard.hpp" />
     <ClInclude Include="include\Line.hpp" />
+    <ClInclude Include="include\Mouse.hpp" />
     <ClInclude Include="include\Object.hpp" />
     <ClInclude Include="include\Physics.hpp" />
     <ClInclude Include="include\Player1.hpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="include\yiostream.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\Mouse.cpp" />
     <ClCompile Include="src\Circle.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics2D.cpp" />
